@@ -10,7 +10,7 @@ router.get("/blogs", async (_, resp) => {
 
 router.delete("/blogs", async (_, resp) => {
     await Blog.deleteMany({ where: {} });
-    resp.status(204).json({ message: "Successfully deleted all blog posts" });
+    resp.status(200).json({ message: "Successfully deleted all blog posts" });
 });
 
 router.post("/blogs", async (req, resp) => {
@@ -46,7 +46,7 @@ router.patch("/blog/:blogId", validateBlogId, async (req, resp) => {
 
 router.delete("/blog/:blogId", validateBlogId, async (req, resp) => {
     await req.blog.remove();
-    resp.status(204).json({ message: "Successfully deleted blog post" });
+    resp.status(200).json({ message: "Successfully deleted blog post" });
 });
 
 module.exports = router;
