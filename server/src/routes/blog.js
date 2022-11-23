@@ -10,7 +10,7 @@ router.get("/blogs", async (_, resp) => {
 
 router.post("/blogs", async (req, resp) => {
     const { author, content } = req.body;
-    if (author === undefined || content === undefined) {
+    if (!author || !content) {
         resp.status(400).json({ message: "Author and content are required." });
         return;
     }
