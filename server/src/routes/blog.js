@@ -8,6 +8,11 @@ router.get("/blogs", async (_, resp) => {
     resp.json(await Blog.find({}));
 });
 
+router.delete("/blogs", async (_, resp) => {
+    await Blog.deleteMany({ where: {} });
+    resp.status(204).json({ message: "Successfully deleted all blog posts" });
+});
+
 router.post("/blogs", async (req, resp) => {
     const { author, content } = req.body;
     if (!author || !content) {
@@ -23,7 +28,10 @@ router.post("/blogs", async (req, resp) => {
     }
 
     const blog = await Blog.create({ authorName: author, content: content });
-    resp.status(201).json(blog.toJSON());
+    resp.status(201).json({
+        message: "Successfully created a blog post",
+        result: blog.toJSON(),
+    });
 });
 
 router.patch("/blog/:blogId", validateBlogId, async (req, resp) => {
@@ -33,12 +41,12 @@ router.patch("/blog/:blogId", validateBlogId, async (req, resp) => {
         return;
     }
     await req.blog.update({ content: newContent });
-    resp.sendStatus(200);
+    resp.json({ message: "Successfully updated blog post" });
 });
 
 router.delete("/blog/:blogId", validateBlogId, async (req, resp) => {
     await req.blog.remove();
-    resp.sendStatus(204);
+    resp.status(204).json({ message: "Successfully deleted blog post" });
 });
 
 module.exports = router;
