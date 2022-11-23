@@ -1,8 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const blogRouter = require("./routes/blog");
 
 const app = express();
 app.use(express.json());
+
+app.use("/", blogRouter);
 
 if (require.main === module) {
     app.listen(5001, async () => {
