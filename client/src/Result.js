@@ -1,6 +1,8 @@
+import "./Result.css";
+
 export default function Result({ error, output }) {
     if (error) {
-        return <p>Error: {error}</p>;
+        return <p id="result">Error: {error}</p>;
     }
-    return <p>{output}</p>;
+    return <p id="result">{output}</p>;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Form from "./Form";
 import Posts from "./Posts";
 import Result from "./Result";
 
@@ -20,20 +21,20 @@ export default function Main() {
     }, [postsChanged]);
 
     async function createBlog() {
-        try {
-            const resp = await fetch("http://127.0.0.1:5001/blogs", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ author, content }),
-            });
-            const json = await resp.json();
+        const resp = await fetch("http://127.0.0.1:5001/blogs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ author, content }),
+        });
+        const json = await resp.json();
+        if (resp.status === 201) {
             setOutput(json.message);
             setPosts([...posts, json.result]);
             setPostsChanged(true);
-        } catch (exc) {
-            setError(exc.message);
+        } else {
+            setError(json.message);
         }
     }
 
@@ -43,9 +44,6 @@ export default function Main() {
         try {
             const resp = await fetch(`http://127.0.0.1:5001/blog/${postId}`, {
                 method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
             });
             const json = await resp.json();
             setOutput(json.message);
@@ -57,17 +55,11 @@ export default function Main() {
 
     return (
         <main>
-            <input
-                onBlur={e => setAuthor(e.target.value)}
-                placeholder="Enter Author"
+            <Form
+                setAuthor={setAuthor}
+                setContent={setContent}
+                createBlog={createBlog}
             />
-            <input
-                onBlur={e => setContent(e.target.value)}
-                placeholder="Enter Content"
-            />
-            <button type="submit" onClick={createBlog}>
-                Submit
-            </button>
             <Result error={error} output={output} />
             <Posts posts={posts} deleteBlog={deleteBlog} />
         </main>

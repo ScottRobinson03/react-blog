@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+* {
+    box-sizing: border-box;
+    color: #E0E0B8;
+    font-family: Roboto, sans-serif;
+}
+
+button.delete-post-btn {
+    background-color: #1e5a68;
+    border-radius: 5px;
+    box-shadow: 1px 2px 3px rgba(255, 255, 255, 40%) inset, -3px -2px 4px rgba(0, 0, 0, 50%) inset; 
+    text-align: center;
+}
+
+p.author {
+    padding-bottom: 0;
+    text-decoration: underline;
+}
+
+p.author, p.content {
+    margin: 0 5px;
+    padding: 5px;
+}
+
+li.blog-post {
+    align-items: center;
+    background-color: #252D49;
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+    overflow-wrap: anywhere;
+    width: 90vw;
+}
+
+ul#post-display {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    list-style-type: none;
+    padding-left: 0;
+    text-align: center;
+}
